@@ -2,6 +2,6 @@ package bot_domain
 
 import "fmt"
 
-func test() {
+func Test() {
 	fmt.Println("test")
 }
