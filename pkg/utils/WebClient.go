@@ -17,7 +17,7 @@ type WebClient struct {
 
 func NewWebClient(ctx context.Context) *WebClient {
 	return &WebClient{
-		address: "your_grpc_server_address:port",
+		address: "localhost:50056",
 	}
 }
 
