@@ -13,7 +13,7 @@ import (
 
 type ParserBase struct {
 	webClient *utils.WebClient
-	ctx       context.Context
+	Ctx       context.Context
 	UseProxy  bool
 	ProxyAddr string
 	Timeout   int64
@@ -24,7 +24,7 @@ func NewParser(ctx context.Context) *ParserBase {
 	webClient := utils.NewWebClient(ctx)
 	return &ParserBase{
 		webClient: webClient,
-		ctx:       ctx,
+		Ctx:       ctx,
 	}
 }
 
@@ -48,7 +48,7 @@ func (p ParserBase) SendGet(url string, headers http.Header, cookies []http.Cook
 			Proxy:    p.ProxyAddr,
 			TimeOut:  p.Timeout,
 		},
-	}, p.ctx)
+	}, p.Ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (p ParserBase) SendPost(url string, body string, headers http.Header, cooki
 			Proxy:    p.ProxyAddr,
 			TimeOut:  p.Timeout,
 		},
-	}, p.ctx)
+	}, p.Ctx)
 	if err != nil {
 		return nil, err
 	}
