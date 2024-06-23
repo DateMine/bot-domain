@@ -22,6 +22,7 @@ type ParserBase struct {
 
 func NewParser(ctx context.Context) *ParserBase {
 	webClient := utils.NewWebClient(ctx)
+
 	return &ParserBase{
 		webClient: webClient,
 		Ctx:       ctx,
