@@ -2,30 +2,35 @@ package parser
 
 import (
 	"context"
+	"github.com/DateMine/bot-domain/pkg/models/offer_storage"
 	"github.com/DateMine/bot-domain/pkg/models/request"
 	"github.com/DateMine/bot-domain/pkg/models/request/clientSettings"
 	"github.com/DateMine/bot-domain/pkg/models/request/requestSettings"
 	"github.com/DateMine/bot-domain/pkg/models/response"
+	"github.com/DateMine/bot-domain/pkg/service_provider"
 	"github.com/DateMine/bot-domain/pkg/utils"
 	"net/http"
 	"time"
 )
 
 type ParserBase struct {
-	webClient *utils.WebClient
-	Ctx       context.Context
-	UseProxy  bool
-	ProxyAddr string
-	Timeout   int64
-	SleepTime int64
+	webClient    *utils.WebClient
+	Ctx          context.Context
+	UseProxy     bool
+	ProxyAddr    string
+	Timeout      int64
+	SleepTime    int64
+	OfferPortion int
+	OfferStorage *offer_storage.OfferStorage
 }
 
-func NewParser(ctx context.Context) *ParserBase {
+func NewParser(serviceProvider *service_provider.ServiceProvider, ctx context.Context) *ParserBase {
 	webClient := utils.NewWebClient(ctx)
 
 	return &ParserBase{
-		webClient: webClient,
-		Ctx:       ctx,
+		webClient:    webClient,
+		Ctx:          ctx,
+		OfferStorage: serviceProvider.OfferStorage(ctx), //TODO надо подумать
 	}
 }
 
