@@ -27,7 +27,7 @@ func (r *repo) GetById(id int, ctx context.Context) (*parser.Parser, error) {
 	return &parserModel, nil
 }
 
-func (r *repo) GetCompanies(ctx context.Context) ([]*parser.Parser, error) {
+func (r *repo) GetParsers(ctx context.Context) ([]*parser.Parser, error) {
 	rows, err := r.pg.Query(ctx, "SELECT id, name, description, created_at, start_parsing, start_report FROM parses")
 	if err != nil {
 		return nil, err
