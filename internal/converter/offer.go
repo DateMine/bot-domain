@@ -3,7 +3,7 @@ package converter
 import (
 	"encoding/json"
 	"encoding/xml"
-	"github.com/DateMine/bot-domain/pkg/models/offer"
+	"github.com/DateMine/bot-domain/pkg/models/db/offer"
 )
 
 func ToOfferXml(offer offer.OfferXML) string {

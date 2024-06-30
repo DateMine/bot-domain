@@ -3,7 +3,7 @@ package offer
 import (
 	"context"
 	"github.com/DateMine/bot-domain/internal/converter"
-	"github.com/DateMine/bot-domain/pkg/models/offer"
+	"github.com/DateMine/bot-domain/pkg/models/db/offer"
 	"github.com/DateMine/bot-domain/pkg/repository"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"log"
@@ -25,7 +25,7 @@ func (r *repo) AddRange(offers []offer.Offer, ctx context.Context) error {
 	offersArray := make([]interface{}, len(offers))
 	for i, offer := range offers {
 		offerXml := converter.ToOfferXml(offer.OfferXML)
-		offerJson := converter.ToOfferJson(offer)
+		offerJson := converter.ToOfferJson(offer.OfferJson)
 		offersArray[i] = []interface{}{
 			offer.OfferId,
 			offer.ParserId,

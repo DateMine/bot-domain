@@ -3,7 +3,7 @@ package offer_storage
 import (
 	"context"
 	"errors"
-	"github.com/DateMine/bot-domain/pkg/models/offer"
+	"github.com/DateMine/bot-domain/pkg/models/db/offer"
 	"github.com/DateMine/bot-domain/pkg/repository"
 	"sync"
 )
@@ -29,9 +29,9 @@ func (s *OfferStorage) Add(offer offer.Offer, ctx context.Context) error {
 		return errors.New("offers is nil")
 	}
 	s.Offers[offer.OfferId] = offer
-	if len(s.Offers) == s.Portion {
-		s.commit(ctx)
-	}
+	//if len(s.Offers) == s.Portion {
+	go s.commit(ctx)
+	//}
 
 	return nil
 }

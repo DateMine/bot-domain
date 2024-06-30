@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"github.com/DateMine/bot-domain/pkg/models/offer"
+	"github.com/DateMine/bot-domain/pkg/models/db/offer"
 )
 
 type OfferRepository interface {
