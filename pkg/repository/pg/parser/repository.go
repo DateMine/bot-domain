@@ -5,6 +5,7 @@ import (
 	"github.com/DateMine/bot-domain/pkg/models/db/parser"
 	"github.com/DateMine/bot-domain/pkg/repository"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"time"
 )
 
 type repo struct {
@@ -49,5 +50,52 @@ func (r *repo) GetParsers(ctx context.Context) ([]*parser.Parser, error) {
 	}
 
 	return parsers, nil
+}
 
+func (r *repo) GetParsersStartByTime(ctx context.Context, date time.Time) ([]*parser.Parser, error) {
+	rows, err := r.pg.Query(ctx, "SELECT id, name, description, created_at, start_parsing, start_report FROM parses WHERE start_parsing <= $1 + interval '10 seconds'", date)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var parsers []*parser.Parser
+	for rows.Next() {
+		var parserModel parser.Parser
+		err := rows.Scan(&parserModel.Id, &parserModel.Name, &parserModel.Description, &parserModel.CreatedAt, &parserModel.StartParsing, &parserModel.StartReport)
+		if err != nil {
+			return nil, err
+		}
+		parsers = append(parsers, &parserModel)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return parsers, nil
+}
+
+func (r *repo) GetParsersReportByTime(ctx context.Context, date time.Time) ([]*parser.Parser, error) {
+	rows, err := r.pg.Query(ctx, "SELECT id, name, description, created_at, start_parsing, start_report FROM parses WHERE start_report <= $1 + interval '10 seconds'", date)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var parsers []*parser.Parser
+	for rows.Next() {
+		var parserModel parser.Parser
+		err := rows.Scan(&parserModel.Id, &parserModel.Name, &parserModel.Description, &parserModel.CreatedAt, &parserModel.StartParsing, &parserModel.StartReport)
+		if err != nil {
+			return nil, err
+		}
+		parsers = append(parsers, &parserModel)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return parsers, nil
 }
